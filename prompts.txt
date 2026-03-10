@@ -1,0 +1,34 @@
+First prompt
+
+I am implementing  a talent/profile explorer where I search for names of users in an organization using an endpoint, and get the profile of results of the user with. another endpoint. Create a search UI on this home page which streams result as I search. Note the search and result action should be debounced. For now, create just the UI that allows user actions and interaction
+
+
+use use-debounce package to manage debounce behaviour
+
+
+Implement the API request function to enable the search functionality using this endpoint documentation:
+
+POST https://torre.ai/api/entities/_searchStream
+(searches for people and organizations using streams)
+
+Query params: {}
+
+Request body: 
+{
+  "query": "Renan Peixoto",
+  "identityType": "person",
+  "limit": 10,
+  "meta": true,
+  "excludeContacts": true
+}
+
+
+Convert header and footer code block into reusable components. 
+
+
+this code block looks messy (streaming requests logic). Replace it with the request function create in the api lib and manage server states using react query 
+
+replace svgs with react-icons
+
+
+Use react-query to manage this request, server state and error
