@@ -1,18 +1,21 @@
 import axios from 'axios';
 import { User } from '@/components/ProfileCard';
+import { TorreSearchStreamEntity } from "./types";
+
+const BASE_URL = "https://torre.ai/api";
 
 export async function searchTorreUsers(query: string, limit: number = 20, onUpdate?: (users: User[]) => void): Promise<User[]> {
   if (!query) return [];
 
   try {
-    const response = await fetch('https://torre.ai/api/entities/_searchStream', {
-      method: 'POST',
+    const response = await fetch(`${BASE_URL}/entities/_searchStream`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query,
-        identityType: 'person',
+        identityType: "person",
         limit,
         meta: true,
         excludeContacts: true,
@@ -40,14 +43,15 @@ export async function searchTorreUsers(query: string, limit: number = 20, onUpda
       for (const line of lines) {
         if (line.trim()) {
           try {
-            const data = JSON.parse(line);
+            const data: TorreSearchStreamEntity = JSON.parse(line);
             const user: User = {
-              id: data.id || data.ggId,
+              id: data.ggId || data.ardaId.toString(),
               name: data.name,
               role: data.professionalHeadline,
-              avatar: data.imageUrl || `https://i.pravatar.cc/150?u=${data.username}`,
+              avatar:
+                data.imageUrl || `https://i.pravatar.cc/150?u=${data.username}`,
               username: data.username,
-              organization: data.locationName
+              organization: data.locationName || "",
             };
             results.push(user);
             batch.push(user);
@@ -70,6 +74,6 @@ export async function searchTorreUsers(query: string, limit: number = 20, onUpda
 }
 
 export async function getTorreProfile(username: string) {
-  const response = await axios.get(`/api/torre/bio?username=${username}`);
+  const response = await axios.get(`${BASE_URL}/genome/bios/${username}`);
   return response.data;
 }
