@@ -22,6 +22,10 @@ A talent explorer where users search for professionals and view their detailed p
 - **Trade-off**: Splitting the UI into many small files (Header, Footer, ProfileCard, ProfileDetail) creates more boilerplate.
 - **Decision**: This was chosen to facilitate isolation in unit testing and to allow for future reuse (e.g., using `ProfileCard` in a "Favorites" list).
 
+### 4. Search Result Limit
+- **Trade-off**: Results are currently limited to 20 per search for the scope of this assessment to maintain high performance and streaming stability.
+- **Decision/Next Steps**: Future enhancements will implement pagination or infinite scroll to allow users to explore the complete talent pool.
+
 ## 🔮 Potential Next Steps
 
 ### 1. Complete Professional Profiles
